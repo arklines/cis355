@@ -1,0 +1,30 @@
+<html>
+<head> 
+<style>
+table, th, td {
+    border: 1px solid black;
+}
+</style> 
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js">
+	</script>  
+	<script>    
+		$(document).ready( function() {  
+			$.get("persons.xml", function(xml) {    
+				$(xml).find("person").each(function() {
+					$("#body").append(        
+						'<tr>'  + '<td>'  + $(this).find('fname').text() + '</td>'  + '<td>'  + $(this).find('lname').text()  + '</td>'  + '<td>'  + $(this).find('age').text() + '</td>' + '</tr>'     
+					);    
+				});  
+			})
+		;});
+	</script>
+</head>
+<body>  
+<table style="width:100%" id="body">
+	<tr id="TableHead">
+		<th>FName</th>
+		<th>LName</th>
+		<th>Age</th>
+	</tr>
+</body>
+</html>

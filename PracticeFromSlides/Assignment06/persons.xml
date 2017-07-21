@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<persons>  
+		<person>    
+			<fname>Frodo   </fname>    
+			<lname>Baggins </lname>  
+			<age>50        </age>
+		</person>  
+		<person>    
+			<fname>Gandalf </fname>    
+			<lname>The Grey</lname>  
+			<age>2000      </age>
+		</person>
+		<person>    
+			<fname>Meriadoc </fname>    
+			<lname>Brandybuck </lname> 
+			<age>36          </age>
+		</person>
+	</persons>
