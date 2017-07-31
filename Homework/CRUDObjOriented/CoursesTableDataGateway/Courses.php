@@ -6,47 +6,39 @@ class Courses
 {	
 		public function insert($data){
 
-			$valid = array();
-			$emptyErrors = CoursesValidation::CheckEmpty($data);
-			if(!empty($emptyErrors)){
-			return $emptyErrors;}
-			
-			//$valid = CoursesValidation::ValidateCourse($data);
-			
-			//if(!empty($valid)){
-			//return $valid;}
-				
-			// insert data
-			$pdo = Database::connect();
-				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				$sql = "INSERT INTO tt_courses (";
-				$paramStr = "(";
-				$valueSet = array();
-				$i = 0;
-			foreach($data as $key => $value){
-				$sql = $sql . "" . $key . ", ";
-				$paramStr = $paramStr . "?,";
-				$valueSet[$i] = $value;
-				$i = $i +1;
-			} 
-			
-				//remove last comma
-				$sql = substr($sql, 0, -2) . ")";
-				$paramStr = substr($paramStr, 0, -1) . ")";
-			
-				$sql = $sql . " values" . $paramStr;
-				echo $sql;
-				try{
-				$q = $pdo->prepare($sql);
-				$q->execute($valueSet);
-				Database::disconnect();
-				}
-				catch(Exception $e){
-					return $e;
-				//header("Location: index.php");
-				}	
-				header("Location: index.php");
-					return "";
+			//$valid = array();
+			//$emptyErrors = CoursesValidation::CheckEmpty($data);
+			//if(!empty($emptyErrors)){
+			//return $emptyErrors;}
+            //
+			//$pdo = Database::connect();
+			//	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			//	$sql = "INSERT INTO tt_courses (";
+			//	$paramStr = "(";
+			//	$valueSet = array();
+			//	$i = 0;
+			//foreach($data as $key => $value){
+			//	$sql = $sql . "" . $key . ", ";
+			//	$paramStr = $paramStr . "?,";
+			//	$valueSet[$i] = $value;
+			//	$i = $i +1;
+			//} 
+			//
+			//	//remove last comma
+			//	$sql = substr($sql, 0, -2) . ")";
+			//	$paramStr = substr($paramStr, 0, -1) . ")";
+			//
+			//	$sql = $sql . " values" . $paramStr;
+			//	try{
+			//	$q = $pdo->prepare($sql);
+			//	$q->execute($valueSet);
+			//	Database::disconnect();
+			//	}
+			//	catch(Exception $e){
+			//		return $e;
+			//	//header("Location: index.php");
+			//	}	
+			//		return "";
 		}
 		
 		public function Find($UID){
