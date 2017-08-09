@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+ <meta charset="utf-8">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link href="../css/MenuHeadBootstrap.css" rel="stylesheet">
+	<script src="../js/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+   <title>CIS-355 > Allison Klinesmith</title>
+<script>
+// this is the id of the form
+
+//on window load, first get _post values. Prepare to send them via ajax after opening create2.php
+
+function retrievePage() {
+xhttp = new XMLHttpRequest();
+//on state change, get response from xhttp and show it
+xhttp.onreadystatechange = function() {
+//If everything is okay on xhttp side, "refresh" the innerHTML when ReadyState changes.
+if (xhttp.readyState == 4 && xhttp.status == 200) {
+document.getElementById("ReadResponse").innerHTML = xhttp.responseText;
+}
+	//check body of response for notification from server on success or error
+		var response = xhttp.responseText.trim();
+		if(response === "error"){
+			window.location = "CourseError.html";
+		}
+};
+
+serverRoot = "https://csis.svsu.edu/~arklines/cis355/Homework/TeeTymeBetter";
+
+var URL =  serverRoot + "/tt_persons/Server/";
+ //Get values from this url, call them to ServerCreate.php
+ var urlThis = document.location.href;
+var attempt = urlThis.split('?')[1];
+	if(!(typeof(attempt)=== 'undefined')){
+	//Using GET for call rather than POST because they're isn't a canned response for "ERROR"; 
+	//A dynamic response is needed from serverCreate.php for the results of the call, 
+	//and creation of the resulting form. If the call just had a success/fail/action needed result,
+	//Or if data were requiring security, we would use POST
+	var id =  attempt.split('id=')[1];
+	xhttp.open("GET", URL + "Read.php?"+attempt, true);
+	xhttp.send();
+
+	}
+	else{
+		window.location = "PersonError.html";
+	}
+}
+
+</script>
+</head>
+
+<body onload="retrievePage();">
+<!-- Dynamic container which, using ajax, will contain a set of input fields for each available field within create.php-->
+    <div class="container">
+                <div class="span10 offset1">
+                    <div class="row">
+                        <h3>Person Details</h3>
+                    </div>
+					<div class="form-horizontal" >
+						<div id ="ReadResponse"></div>
+						<div class="form-actions">
+							<a class="btn" href="index.html">Back</a>
+						</div>
+                    </div>
+                </div>                
+    </div> <!-- /container -->
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<script src="../js/bootstrap.min.js"></script>
+<link href="../css/MenuHeadBootstrap.css" rel="stylesheet">
+<script src="../js/jquery.min.js"></script>
+<title>CIS-355 > Allison Klinesmith</title>
+<script type="text/javascript">
+	
+	</script>
+    <!-- Custom CSS -->
+    <style>
+    .menuHead {
+        padding-top: 70px;
+        /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    }	
+	
+    </style>
+	
+	
+<script>
+function retrievePage() {
+xhttp = new XMLHttpRequest();
+//Get last page
+var referrer =  document.referrer;
+//on state change, get response from xhttp and show it
+xhttp.onreadystatechange = function() {
+//If everything is okay on xhttp side, "refresh" the innerHTML when ReadyState changes.
+	if (xhttp.readyState == 4 && xhttp.status == 200) {
+	document.getElementById("log").innerHTML = xhttp.responseText;
+		//check body of response for notification from server on success or error
+		var response = xhttp.responseText.trim();
+
+		if(response === "success"){
+			var urlThis = referrer;
+			//If the last viewed URL was from the TeeTyme web app...
+			var attempt = urlThis.split('TeeTymeBetter')[0];
+
+			if(!(typeof(attempt)=== 'undefined')){
+			//Post back to last url
+			window.location = referrer;
+			}
+			else{
+			window.location = "../index.html";
+			}
+		}
+	
+		if(response === "error"){
+			window.location = "PersonError.html";
+		}
+	}
+};
+//console.log("okay");
+serverRoot = "https://csis.svsu.edu/~arklines/cis355/Homework/TeeTymeBetter";
+
+var URL =  serverRoot + "/tt_persons/Server/";
+xhttp.open("GET", URL + "Login.php", true);
+xhttp.send();
+}
+
+function PostForm(){
+serverRoot = "https://csis.svsu.edu/~arklines/cis355/Homework/TeeTymeBetter";
+
+var URL =  serverRoot + "/tt_persons/Server/";
+//Get values from this url, call them to ServerCreate.php
+//var urlThis = document.location.href;
+var data = $('#loginForm').serializeArray();
+var attempt = $.param(data);
+//attempt = encodeURIComponent(attempt);
+//send data as post, rather than get, to avoid showing password
+	xhttp.open("POST", URL + "Login.php", true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send(attempt);
+}
+</script>   
+</head>
+	<!-- load header -->
+	<div id="header" class="menuHead"></div>
+	<!-- clall RetrivePage, which will load the outputted table from index.php into div tableBody -->
+	<body onload="retrievePage();">
+		<div class="container">
+         <div class="span10 offset1">
+		<form id="loginForm" onsubmit="PostForm(); return false;">
+			<div id="log"></div>
+		<div class="form-actions">
+		<tr>
+        <td></td>
+        <td><button class="btn btn-success" name="login_btn" >Log in</button>
+		</tr>
+		<tr>
+		<td>Not yet registered?</td>
+		</tr>
+		<tr>
+		<td>
+			Please contact the page administrator for execute/write access of this page
+		</td>
+		</tr>
+	 </div>
+	 </form>
+	 </div>
+	 </div>
+	</body> 
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<script src="../js/bootstrap.min.js"></script>
+<link href="../css/MenuHeadBootstrap.css" rel="stylesheet">
+<script src="../js/jquery.min.js"></script>
+<title>CIS-355 > Allison Klinesmith</title>
+<script type="text/javascript">
+	$(function(){
+	$("#header").load("../adminHeader.html"); 
+	});
+	</script>
+    <!-- Custom CSS -->
+    <style>
+    .menuHead {
+        padding-top: 70px;
+        /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    }	
+	
+    </style>
+	
+	
+<script>
+function retrievePage() {
+xhttp = new XMLHttpRequest();
+
+//on state change, get response from xhttp and show it
+xhttp.onreadystatechange = function() {
+//If everything is okay on xhttp side, "refresh" the innerHTML when ReadyState changes.
+	if (xhttp.readyState == 4 && xhttp.status == 200) {
+	document.getElementById("message").innerHTML = xhttp.responseText;
+		//check body of response for notification from server on success or error
+		var response = xhttp.responseText.trim();
+
+		if(response === "success"){
+			window.location = "index.html";
+		}
+		if(response === "error"){
+			window.location = "PersonError.html";
+		}
+		if(response === "You are now logged out"){
+		window.location = "Login.html";
+		}
+		else{
+		window.location = "index.html";
+		}
+	}
+};
+//console.log("okay");
+serverRoot = "https://csis.svsu.edu/~arklines/cis355/Homework/TeeTymeBetter";
+
+var URL =  serverRoot + "/tt_persons/Server/";
+xhttp.open("GET", URL + "logout.php", true);
+xhttp.send();
+}
+
+</script>   
+</head>
+	<!-- load header -->
+	<div id="header" class="menuHead"></div>
+	<!-- clall RetrivePage, which will load the outputted table from index.php into div tableBody -->
+	<body id="message" onload="retrievePage();">
+		
+	</body> 
+</html>

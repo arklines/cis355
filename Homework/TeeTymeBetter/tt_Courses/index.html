@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<script src="../js/bootstrap.min.js"></script>
+<link href="../css/MenuHeadBootstrap.css" rel="stylesheet">
+<script src="../js/jquery.min.js"></script>
+<title>CIS-355 > Allison Klinesmith</title>
+<script type="text/javascript">
+	$(function(){
+	$(function(){
+	$("#header").load("/~arklines/cis355/Homework/TeeTymeBetter/adminHeader.html"); 
+	});
+	});
+	</script>
+    <!-- Custom CSS -->
+    <style>
+    .menuHead {
+        padding-top: 70px;
+        /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    }	
+	
+    </style>
+<script>
+function retrievePage() {
+xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+if (xhttp.readyState == 4 && xhttp.status == 200) {
+document.getElementById("tableBody").innerHTML = xhttp.responseText;
+}
+};
+var URL = "Server/";
+xhttp.open("GET", URL + "index.php", true);
+xhttp.send();
+}
+</script>   
+</head>
+	<!-- load header -->
+	<div id="header" class="menuHead"></div>
+	<!-- clall RetrivePage, which will load the outputted table from index.php into div tableBody -->
+	<body onload="retrievePage();">
+	
+    <div class="container" width=20%>
+            <div class="row">
+                <h3>PHP CRUD Grid Courses</h3>
+            </div>
+            <div class="row">
+                <p>
+                    <a href="create.html" class="btn btn-success">Create</a>
+                </p>
+				<div id ="tableBody"></div>
+				</div>
+    </div> <!-- /container -->
+	</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title></title>
+ <link href="../../css/bootstrap.min.css" rel="stylesheet">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="imagetoolbar" content="false">
+<meta http-equiv="imagetoolbar" content="no">
+<script src="../../js/jquery.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+<script type="text/javascript" src="uploader.js"></script>
+<script type="text/javascript">
+
+window.addEventListener("load", function() {
+//Initial file get   
+var response;
+xhttp = new XMLHttpRequest();
+//on state change, get response from xhttp and show it
+xhttp.onreadystatechange = function() {
+//If everything is okay on xhttp side, "refresh" the innerHTML when ReadyState changes.
+if (xhttp.readyState == 4 && xhttp.status == 200) {
+document.getElementById("message").innerHTML = xhttp.responseText;
+}
+	//check body of response for notification from server on success or error
+		 response = xhttp.responseText.trim();
+		if(response === "error"){
+			window.location = "../PersonError.html";
+		}
+		
+		if(response === "success"){
+			window.location = "index.html";
+		}
+
+		if(response === "NoUser"){
+
+			window.location = "../Login.html";
+		}
+};
+
+ //Get values from this url, call them to ServerCreate.php
+ var urlThis = document.location.href;
+var attempt = urlThis.split('?')[1];
+
+	if(!(typeof(attempt)=== 'undefined')){
+	//Using GET for call rather than POST because they're isn't a canned response for "ERROR"; 
+	//A dynamic response is needed from serverCreate.php for the results of the call, 
+	//and creation of the resulting form. If the call just had a success/fail/action needed result,
+	//Or if data were requiring security, we would use POST
+	var id =  attempt.split('id=')[1];
+	xhttp.open("GET","upload.php?"+attempt+"userimageReturn=true", true);
+	xhttp.send();
+
+	}
+	else{
+		window.location = "PersonError.html";
+	}
+///File upload 
+    var input = document.getElementById("userfile");
+    var img = document.getElementById("img");
+    var previewBtn = document.getElementById("preview");
+    previewBtn.addEventListener("click", function() {
+	 var reader = new FileReader();
+	
+	 //Filereader is asynchronous
+	 reader.onload = function(event) {
+		img.src = event.target.result;
+	};
+	 reader.readAsDataURL(input.files[0]);
+	 
+    }, false);
+
+    var form = document.getElementsByTagName("form")[0];
+    var uploader = new Uploader(form);
+	
+	 uploader.on("uploadResponse", function(event, response){
+	 document.getElementById("message").innerHTML = response;
+		if(response.trim() === "success"){
+			window.location = "../index.html";
+		}
+	 });
+    var uploadBtn = document.getElementById("upload");
+
+    uploadBtn.addEventListener("click", function() {
+        uploader.send();
+    }, false);
+
+	
+}, false);
+</script>
+</head>
+<body>
+<div id="message"></div>
+<form action="upload.php" method="post"
+      enctype="multipart/form-data"
+      onsubmit="return false;">
+  <fieldset>
+    <table width="350" border="0" 
+				cellpadding="1" cellspacing="1" class="box">
+				<tr><td>Select a File</td></tr>
+				<tr><td>
+				<input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+				<input name="userfile" type="file" id="userfile">
+				</td></tr>
+				<tr>
+				<td width="80">
+				<input name="upload" type="submit" class="box" id="upload"  value=" Upload ">
+				</td>
+				</tr>
+			</table>
+    <input type="submit" value="Preview" id="preview">
+    <hr>
+    <img src="" alt="image preview" id="img">
+  </fieldset>
+</form>
+ <a class="btn" href="../index.html">Back</a>
+<div><a href="https://csis.svsu.edu/~arklines/cis355/PracticeFromSlides/uploader.js">Nifty javascript code</a></div>
+
+</body>
+</html>
